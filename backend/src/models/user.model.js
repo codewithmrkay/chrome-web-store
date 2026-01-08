@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -21,6 +21,11 @@ const userSchema = mongoose.Schema({
     isActive: {
         type: Boolean,
         default: true,
+    },
+    role: {
+        type: String,
+        enum: ["user", "admin"],
+        default: "user"
     }
 }, { timestamps: true })
 const User = mongoose.model("User", userSchema)

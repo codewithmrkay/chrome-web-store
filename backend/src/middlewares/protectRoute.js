@@ -9,7 +9,7 @@ const protectRoute = async (req, res,next) => {
         }
         const decode = jwt.verify(token, process.env.JWT_SECRET)
 
-        const user = await User.findById(decode.userId)
+        const user = await User.findById(decode.userId).select("-password")
         if (!user) {
             return res.status(401).json({ message: "User not found" })
         }
@@ -18,7 +18,7 @@ const protectRoute = async (req, res,next) => {
         next()
     } catch (error) {
         console.log("error in protectRoute", error)
-        res.status(500).json({ message: "internal server error" })
+        res.status(401).json({ message: "internal server error" })
     }
 }
 export default protectRoute

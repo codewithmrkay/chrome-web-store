@@ -35,7 +35,7 @@ export const signUp = async (req, res) => {
         })
 
         // 5️⃣ Generate JWT
-        const token = generateToken(user._id)
+        const token = generateToken(user)
 
         // 6️⃣ Set cookie
         setAuthCookies(res, token)
@@ -47,7 +47,8 @@ export const signUp = async (req, res) => {
             user: {
                 _id: user._id,
                 username: user.username,
-                email: user.email
+                email: user.email,
+                role: user.role
             }
         })
 
@@ -82,7 +83,7 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: "Invalid User" })
         }
         // generate token and setting cookie
-        const token = generateToken(user._id)
+        const token = generateToken(user)
         setAuthCookies(res, token)
 
         res.status(200).json({
@@ -90,7 +91,8 @@ export const login = async (req, res) => {
             user: {
                 _id: user._id,
                 email: user.email,
-                username: user.username
+                username: user.username,
+                role: user.role
             }
         })
     } catch (error) {

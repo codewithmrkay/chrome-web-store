@@ -1,5 +1,8 @@
 import express from "express"
 import authRoute from "./routes/auth.routes.js"
+import cateGoryRoute from "./routes/category.routes.js"
+import shortcutRoute from "./routes/shortcut.routes.js"
+import adminRoute from "./routes/admin.routes.js"
 import dotenv from "dotenv"
 import connectDb from "./config/Db.js"
 import cookieParser from "cookie-parser"
@@ -14,6 +17,9 @@ app.use(cookieParser())
 
 
 app.use('/api/auth',authRoute)
+app.use('/api/category',cateGoryRoute)
+app.use('/api/shortcut',shortcutRoute)
+app.use('/api/admin',adminRoute)
 
 connectDb().then(() => {
     app.listen(port, () => {
