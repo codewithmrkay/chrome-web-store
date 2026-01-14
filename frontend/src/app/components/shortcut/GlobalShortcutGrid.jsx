@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
-import { useShortcutStore } from '../../store/GlobalShortcutStore';
+import { useShortcutStore } from '../../store/GlobalShortcut.store';
 import { GlobalShortcutItem } from './GlobalShortcutItem';
-import { GlobalShortcutService } from '../../services/GlobalShortcutService';
 
 export const GlobalShortcutGrid = () => {
-    const { shortcuts, loading, error, fetchShortcuts } = useShortcutStore();
-
-    // Fetch shortcuts on mount
+    const { loading, error, fetchShortcuts, shortcuts, selectedCategory } = useShortcutStore();
+    const filteredShortcuts = shortcuts.filter(s => 
+        selectedCategory === 'all' ? true : s.category?.name === selectedCategory
+    );
     useEffect(() => {
         if (shortcuts.length === 0) {
             fetchShortcuts();
-            GlobalShortcutService.getAllShortcuts()
         }
     }, []);
 
@@ -63,7 +62,7 @@ export const GlobalShortcutGrid = () => {
     return (
         <div className="container mx-auto px-4 py-6">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                {shortcuts.map((shortcut) => (
+                {filteredShortcuts.map((shortcut) => (
                     <GlobalShortcutItem
                         key={shortcut._id}
                         shortcut={shortcut}

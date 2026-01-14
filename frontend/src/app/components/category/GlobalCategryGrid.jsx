@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { useGlobalCategoryStore } from '../../store/GlobalCategory.store';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { GlobalCategoryItem } from './GlobalCategoryItem';
+import { useShortcutStore } from '../../store/GlobalShortcut.store';
 
 
 export const GlobalCategoryGrid = () => {
   const { categories, selectedCategory, loading, error, fetchCategories, setSelectedCategory } = useGlobalCategoryStore();
+  const {  setCategory } = useShortcutStore();
 
   // Fetch categories on mount
   useEffect(() => {
@@ -16,6 +17,7 @@ export const GlobalCategoryGrid = () => {
 
   // Handle category click
   const handleCategoryClick = (category) => {
+    setCategory(category.name.toLowerCase())
     setSelectedCategory(category.name);
     // Add your filter logic here
   };
@@ -23,7 +25,7 @@ export const GlobalCategoryGrid = () => {
   // Loading state
   if (loading) {
     return (
-      <div className="bg-base-100 shadow-md h-fit w-full max-w-6xl">
+      <div className="bg-base-100  h-fit w-full max-w-6xl">
         <div>
           <div className="flex flex-wrap mr-auto w-full max-w-6xl gap-2">
             {[1, 2, 3, 4, 5,6,7,8,9,10].map((i) => (
@@ -52,7 +54,7 @@ export const GlobalCategoryGrid = () => {
   }
 
   return (
-    <div className="bg-base-100 shadow-md sticky top-0 z-10">
+    <div className="bg-base-100 shadow-xl sticky top-0 z-10">
       <div className="container">
         <div className="flex items-center gap-2">
           {/* Categories Grid Container */}

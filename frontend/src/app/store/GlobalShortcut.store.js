@@ -1,21 +1,26 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { GlobalShortcutService } from '../services/GlobalShortcutService';
-
+import { GlobalShortcutService } from "../services/globalShorcut.services"
 export const useShortcutStore = create(
     persist(
-        (set) => ({
+        (set, get) => ({
             shortcuts: [],
             loading: false,
             error: null,
+            selectedCategory: 'all',
+            setCategory: (categoryName) => set({ selectedCategory: categoryName }),
 
-            // Fetch all shortcuts
+            getFilteredShortcuts: () => {
+                const { shortcuts, selectedCategory } = get();
+                if (selectedCategory === 'all') return shortcuts;
+                return shortcuts.filter(s => s.category?.name === selectedCategory);
+            },
             fetchShortcuts: async () => {
                 try {
                     set({ loading: true, error: null });
 
                     const data = await GlobalShortcutService.getAllShortcuts();
-                    console.log("fetched global shorcuts ",data)
+
                     set({ shortcuts: data.Globalshortcuts, loading: false });
                 } catch (err) {
                     set({
@@ -24,6 +29,12 @@ export const useShortcutStore = create(
                     });
                 }
             }
-        })
+        }),
+        {
+            name: 'shortcut-storage',
+            partialize: (state) => ({
+                shortcuts: state.shortcuts,
+            })
+        }
     )
 )

@@ -3,7 +3,7 @@ import { Sidebar } from "../components/sidebar/Sidebar";
 import { Navbar } from "../components/navbar/Navbar";
 import { useEffect } from "react";
 import { useGlobalCategoryStore } from "../store/GlobalCategory.store";
-import { useShortcutStore } from "../store/GlobalShortcutStore";
+import { useShortcutStore } from "../store/GlobalShortcut.store";
 
 export const AppLayout = () => {
   const fetchCategories = useGlobalCategoryStore((state) => state.fetchCategories);

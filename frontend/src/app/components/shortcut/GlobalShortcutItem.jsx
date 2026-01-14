@@ -4,9 +4,9 @@ import { Star } from 'lucide-react';
 export const GlobalShortcutItem = ({ shortcut }) => {
 
     const handleStarClick = (e) => {
-        e.preventDefault(); // Prevent navigation if wrapped in link
-    };
-
+        e.preventDefault(); 
+        e.stopPropagation();
+    }
     const handleCardClick = () => {
         window.open(shortcut.url, '_blank', 'noopener,noreferrer');
     };
@@ -23,17 +23,19 @@ export const GlobalShortcutItem = ({ shortcut }) => {
     };
 
     return (
-        <div className='flex items-center justify-center p-2 py-4 bg-base-200 rounded-xl'>
-            <div className='flex flex-col items-center justify-center gap-3'>
-                <div className='w-15 h-15'>
-                    <img className='rounded-xl bg-white w-full h-full object-cover object-center' src={getFaviconUrl(shortcut.url)} alt={shortcut.title} />
+        <div onClick={handleCardClick} className='shadow-xl shadow-black flex items-center justify-center py-4 bg-base-100 rounded-xl'>
+            <div className='cursor-pointer flex flex-col items-center justify-center gap-3'>
+                <div className='p-4 bg-base-300 rounded-xl'>
+                    <div className='w-15 h-15'>
+                        <img className='rounded-xl bg-white w-full h-full object-cover object-center' src={getFaviconUrl(shortcut.url)} alt={shortcut.title} />
+                    </div>
                 </div>
                 <div>
                     <h1>{shortcut.title}</h1>
                 </div>
-                <div className='flex items-center justify-center gap-1'>
-                    <span>⭐</span>
-                    <button className='btn btn-primary btn-xs'>ADD</button>
+                <div className='flex items-center justify-center gap-3'>
+                    <span>⭐{shortcut.starCount}</span>
+                    <button onClick={handleStarClick} className='btn btn-primary btn-xs'>ADD</button>
                 </div>
             </div>
         </div>

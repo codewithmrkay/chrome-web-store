@@ -1,5 +1,5 @@
 import {create} from "zustand"
-import { getGlobalCateGories } from "../services/globalCategory.servicesApi";
+import { getGlobalCateGories } from "../services/globalCategory.services";
 
 export const useGlobalCategoryStore = create((set) => ({
   categories: [],

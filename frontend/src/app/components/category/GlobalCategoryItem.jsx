@@ -12,7 +12,7 @@ export const GlobalCategoryItem = ({ category, isSelected, onClick }) => {
     <button
       onClick={() => onClick(category)}
       className={`
-        btn btn-sm gap-2 shrink-0
+        btn btn-sm gap-1 shrink-0
         ${isSelected 
           ? 'btn-primary' 
           : 'btn-neutral'
@@ -20,7 +20,7 @@ export const GlobalCategoryItem = ({ category, isSelected, onClick }) => {
       `}
     >
       {getIcon(category.icon)}
-      <span className="whitespace-nowrap font-medium">{category.name}</span>
+      <span className="whitespace-nowrap font-medium">{category.name.toUpperCase()}</span>
     </button>
   );
 };
