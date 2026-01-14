@@ -27,13 +27,17 @@ const globalShortcutSchema = new mongoose.Schema(
 
         order: {
             type: Number,
-            default: 0 // sorting priority
+            default: 0 
+        },
+
+        starCount:{
+            type:Number,
+            default:0
         }
     },
     { timestamps: true }
 )
 
-// avoid duplicate shortcuts inside same category
 globalShortcutSchema.index(
     { title: 1, category: 1 },
     { unique: true }

@@ -39,6 +39,16 @@ export const deleteGlobalCategory = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+export const getGlobalCategory = async (req, res) => {
+  try {
+
+    const result = await GlobalCategory.find();
+
+    res.status(200).json({ message: "get global Category",result});
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 
 export const createGlobalShortcut = async (req, res) => {
@@ -66,6 +76,16 @@ export const createGlobalShortcut = async (req, res) => {
     if (error.code === 11000) {
       return res.status(409).json({ message: "Duplicate shortcut" });
     }
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getGlobalShortcut = async (req, res) => {
+  try {
+    const Globalshortcuts = await GlobalShortcut.find().populate("category","name").sort({createdAt:-1});
+    res.status(201).json({message:"Global Shortcut Get Successfully",Globalshortcuts});
+  } catch (error) {
+    console.log("error to get Global Shorcuts",error)
     res.status(500).json({ message: "Internal server error" });
   }
 };
