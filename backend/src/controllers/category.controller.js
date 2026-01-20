@@ -105,4 +105,4 @@ export const getCateGory = async (req, res) => {
         console.log("error in GetCategory Route ", error)
         res.status(500).json({ message: "internal server error" })
     }
-}
+} 

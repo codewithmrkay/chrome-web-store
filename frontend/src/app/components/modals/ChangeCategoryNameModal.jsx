@@ -1,11 +1,17 @@
-import { useState } from 'react';
-import { Plus } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Pen } from 'lucide-react';
 import { useCategoryStore } from '../../store/Category.store';
 
-export const CreateNewCateGoryModal = () => {
+export const ChangeCategoryNameModal = ({ categoryId, currentName }) => {
     const [categoryName, setCategoryName] = useState('');
     const [error, setError] = useState('');
-    const { addCategory, loading } = useCategoryStore();
+    const { updateCategory, loading } = useCategoryStore();
+
+    useEffect(() => {
+        if (currentName) {
+            setCategoryName(currentName);
+        }
+    }, [currentName]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,43 +26,46 @@ export const CreateNewCateGoryModal = () => {
             return;
         }
 
-        const result = await addCategory(categoryName.trim());
+        if (categoryName.trim() === currentName) {
+            setError('Please enter a different name');
+            return;
+        }
 
-        if (result.success) {
-            document.getElementById('my_modal_5').close();
+        const success = await updateCategory(categoryId, categoryName.trim());
+
+        if (success) {
+            document.getElementById(`update_modal_${categoryId}`).close();
             setCategoryName('');
             setError('');
         } else {
-            setError(result.error?.response?.data?.message || 'Failed to create category');
+            setError('Failed to update category');
         }
     };
 
     const handleChange = (e) => {
         setCategoryName(e.target.value);
-        setError(''); 
-    };
-    
-    const handleClose = () => {
-        setCategoryName('');
         setError('');
-        document.getElementById('my_modal_5').close();
+    };
+
+    const handleClose = () => {
+        setCategoryName(currentName);
+        setError('');
+        document.getElementById(`update_modal_${categoryId}`).close();
     };
 
     return (
         <div>
             <button
-                onClick={() => document.getElementById('my_modal_5').showModal()}
-                className='btn btn-secondary btn-sm uppercase'>
-                <span>
-                    <Plus size={15} />
-                </span>
-                create new Category
+                onClick={() => document.getElementById(`update_modal_${categoryId}`).showModal()}
+                className='btn btn-ghost btn-xs'
+                title="Edit">
+                <Pen size={13} />
             </button>
-            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+            <dialog id={`update_modal_${categoryId}`} className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
-                    <h3 className="font-bold text-lg">Create New Category</h3>
+                    <h3 className="font-bold text-lg">Change Category Name</h3>
                     <label className="label">
-                        <span className="label-text">Enter Category Name</span>
+                        <span className="label-text">Enter New Category Name</span>
                         <span className="label-text-alt">{categoryName.length}/50</span>
                     </label>
                     <input
@@ -64,7 +73,7 @@ export const CreateNewCateGoryModal = () => {
                         value={categoryName}
                         onChange={handleChange}
                         type="text"
-                        className={`input input-bordered mt-2 w-full ${error ? 'input-error' : ''}`}
+                        className={`input mt-2 input-bordered w-full ${error ? 'input-error' : ''}`}
                         placeholder="e.g., Work, Personal, Travel"
                         maxLength={50}
                     />
@@ -80,7 +89,7 @@ export const CreateNewCateGoryModal = () => {
                                 className="btn btn-primary mr-3"
                                 disabled={loading}
                             >
-                                {loading ? 'Creating...' : 'Create'}
+                                {loading ? 'Updating...' : 'Update'}
                             </button>
                             <button
                                 type="button"

@@ -26,8 +26,8 @@ export const GlobalShortcutItem = ({ shortcut }) => {
         <div onClick={handleCardClick} className='shadow-xl shadow-black flex items-center justify-center py-4 bg-base-100 rounded-xl'>
             <div className='cursor-pointer flex flex-col items-center justify-center gap-3'>
                 <div className='p-4 bg-base-300 rounded-xl'>
-                    <div className='w-15 h-15'>
-                        <img className='rounded-xl bg-white w-full h-full object-cover object-center' src={getFaviconUrl(shortcut.url)} alt={shortcut.title} />
+                    <div>
+                        <img className='rounded-full p-2 bg-white w-15 h-15 object-cover object-center' src={getFaviconUrl(shortcut.url)} alt={shortcut.title} />
                     </div>
                 </div>
                 <div>
