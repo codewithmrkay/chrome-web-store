@@ -2,45 +2,62 @@ import User from "../models/user.model.js"
 import bcrypt from "bcryptjs"
 import setAuthCookies from "../utils/setAuthCookie.js"
 import generateToken from "../utils/generateToken.js"
+
+
+
+
+
+
+
+
+
+
 export const signUp = async (req, res) => {
     const { username, password, email } = req.body
     try {
+        // 1 take input
         if (!username || !password || !email) {
             return res.status(400).json({ message: "all field are required" })
         }
-        if (password.length < 6) {
-            return res.status(400).json({ message: "Password legnth at least 6" })
-        }
-        const userNameTaken = await User.findOne({ username })
-        if (userNameTaken) {
-            return res.status(400).json({ message: "Username is already taken" })
-        }
+
+        // 2 validate input
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
         if (!emailPattern.test(email)) {
             return res.status(400).json({ message: "Provide Valid Email" })
         }
+        if (password.length < 6) {
+            return res.status(400).json({ message: "Password legnth at least 6" })
+        }
+
+
+        // 3 check duplicate
+        const userNameTaken = await User.findOne({ username })
+        if (userNameTaken) {
+            return res.status(400).json({ message: "Username is already taken" })
+        }
         const emailTaken = await User.findOne({ email })
         if (emailTaken) {
             return res.status(400).json({ message: "Email is already taken" })
         }
+
+        // 4 encrypt password
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
 
-        // 4️⃣ Create user
         const user = new User({
             username,
             email,
             password: hashedPassword
         })
 
-        // 5️⃣ Generate JWT
+        // Generate JWT
         const token = generateToken(user)
 
-        // 6️⃣ Set cookie
+        // Set cookie
         setAuthCookies(res, token)
 
-        // 7️⃣ Send safe response
+        //  Send safe response
         await user.save()
         res.status(201).json({
             message: "Signup successful",

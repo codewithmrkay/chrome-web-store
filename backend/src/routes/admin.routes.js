@@ -11,7 +11,7 @@ Route.delete( "/categories/:id", protectRoute, isAdmin, deleteGlobalCategory );
 Route.get( "/categories", getGlobalCategory );
 
 Route.post( "/shortcuts", protectRoute, isAdmin, createGlobalShortcut );
-Route.get( "/shortcuts", protectRoute, getGlobalShortcut );
+Route.get( "/shortcuts", getGlobalShortcut );
 Route.put( "/shortcuts/:id", protectRoute, isAdmin, updateGlobalShortcut);
 Route.post( "/shortcuts/bulk", protectRoute, isAdmin, bulkAddGlobalShortcuts);
 Route.delete( "/shortcuts/:id", protectRoute, isAdmin, deleteGlobalShortcut );

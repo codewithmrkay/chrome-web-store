@@ -5,7 +5,7 @@ import { MiddlePart } from './MiddlePart.jsx'
 
 export const Navbar = () => {
   return (
-    <div className='flex items-center justify-between py-2 gap-2 w-full mx-auto max-w-6xl'>
+    <div className='flex items-center justify-between pb-2 gap-2 w-full mx-auto max-w-6xl'>
       <div className='justify-start'>
         <div className='flex items-center justify-center'>
           {/* sidebar togle bolte */}

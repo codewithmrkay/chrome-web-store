@@ -1,12 +1,11 @@
 import React from 'react'
-import { GlobalShortcutGrid } from '../components/shortcut/GlobalShortcutGrid'
-import { GlobalCategoryGrid } from '../components/category/GlobalCategryGrid'
+import { useNavigate } from 'react-router-dom';
+import { UserShortcutGrid } from '../components/shortcut/UserShortcutGrid';
 
 export const Home = () => {
   return (
     <div>
-      <GlobalCategoryGrid/>
-      <GlobalShortcutGrid />
+      <UserShortcutGrid/>
     </div>
   )
 }

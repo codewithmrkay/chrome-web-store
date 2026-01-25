@@ -31,6 +31,11 @@ export const createShortcut = async (req, res) => {
     res.status(201).json(shortcut)
 
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({
+        error: 'This shortcut already exists in this category.'
+      });
+    }
     console.error("createShortcut error:", error)
     res.status(500).json({ message: "Internal server error" })
   }

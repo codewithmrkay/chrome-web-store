@@ -29,6 +29,6 @@ const shortcutSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-shortcutSchema.index({ category: 1 })
+shortcutSchema.index({ category: 1, url: 1 }, { unique: true })
 
 export const Shortcut = mongoose.model("Shortcut", shortcutSchema)

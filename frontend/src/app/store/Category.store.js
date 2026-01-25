@@ -6,7 +6,7 @@ export const useCategoryStore = create(
   persist(
     (set, get) => ({
       categories: [],
-      selectedCategory: 'All',
+      selectedCategory: '',
       loading: false,
       error: null,
 
@@ -34,10 +34,8 @@ export const useCategoryStore = create(
 
           const data = await getCateGories();
           const allCategories = [
-            { _id: 'all', name: 'All' },
             ...data.categories
           ];
-
           set({ categories: allCategories, loading: false });
         } catch (err) {
           console.log(err)

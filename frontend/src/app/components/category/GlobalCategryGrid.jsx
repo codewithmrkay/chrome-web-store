@@ -2,11 +2,17 @@ import React, { useEffect } from 'react';
 import { useGlobalCategoryStore } from '../../store/GlobalCategory.store';
 import { GlobalCategoryItem } from './GlobalCategoryItem';
 import { useShortcutStore } from '../../store/GlobalShortcut.store';
+import { useNavigate } from 'react-router-dom';
 
 
 export const GlobalCategoryGrid = () => {
+  const navigate = useNavigate();
+  const handleExplore = () => {
+    navigate('/')
+  }
+
   const { categories, selectedCategory, loading, error, fetchCategories, setSelectedCategory } = useGlobalCategoryStore();
-  const {  setCategory } = useShortcutStore();
+  const { setCategory } = useShortcutStore();
 
   // Fetch categories on mount
   useEffect(() => {
@@ -28,7 +34,7 @@ export const GlobalCategoryGrid = () => {
       <div className="bg-base-100  h-fit w-full max-w-6xl">
         <div>
           <div className="flex flex-wrap mr-auto w-full max-w-6xl gap-2">
-            {[1, 2, 3, 4, 5,6,7,8,9,10].map((i) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
               <div key={i} className="skeleton h-8 w-24 shrink-0 rounded-lg"></div>
             ))}
           </div>
@@ -58,7 +64,7 @@ export const GlobalCategoryGrid = () => {
       <div className="container">
         <div className="flex items-center gap-2">
           {/* Categories Grid Container */}
-          <div 
+          <div
             className="flex flex-wrap gap-2 overflow-x-auto scroll-smooth scrollbar-hide flex-1"
           >
             {categories.map((category) => (
@@ -69,6 +75,7 @@ export const GlobalCategoryGrid = () => {
                 onClick={handleCategoryClick}
               />
             ))}
+            <button onClick={() => handleExplore()} className='btn btn-sm btn-secondary'>Go To MyShortCuts</button>
           </div>
         </div>
       </div>
