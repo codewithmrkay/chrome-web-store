@@ -39,7 +39,7 @@ export const UserShortcutItem = ({ shortcut }) => {
                         e.stopPropagation();
                     }}
                     className='flex items-center justify-center gap-3'>
-                    <span>⭐{shortcut.starCount || 0}</span>
+                    {/* <span>⭐{shortcut.starCount || 0}</span> */}
                     <DeleteShortcutModal
                         shortcutId={shortcut._id}
                         shortcutTitle={shortcut.title}

@@ -17,3 +17,8 @@ export const deleteShortcut = async (shorcutId) => {
   const res = await api.delete(`/shortcut/delete/${shorcutId}`)
   return res.data;
 };
+export const addGlobalShortcutToUser = async (globalShortcutId, userCategoryId) => {
+  console.log("user category id :", userCategoryId)
+  const res = await api.put(`/shortcut/updatestar/${globalShortcutId}`, { userCategoryId })
+  return res.data;
+};

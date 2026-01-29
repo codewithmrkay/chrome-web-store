@@ -1,24 +1,15 @@
 import { create } from 'zustand';
-import { getShortcut, updateShortcut, deleteShortcut, createShortcut } from '../services/shortcut.services';
+import { getShortcut, updateShortcut, deleteShortcut, createShortcut, addGlobalShortcutToUser } from '../services/shortcut.services';
 
 export const useShortcutStore = create((set, get) => ({
     shortcuts: [],
-    selectedCategory: 'All', // Add selected category state
     loading: false,
     error: null,
 
-    // Set selected category
-    setSelectedCategory: (categoryName) => {
-        set({ selectedCategory: categoryName });
-    },
-
-    // Fetch all shortcuts
     fetchShortcuts: async () => {
         try {
             set({ loading: true, error: null });
-
             const data = await getShortcut();
-
             set({ shortcuts: data.result || data, loading: false });
         } catch (err) {
             set({
@@ -28,9 +19,7 @@ export const useShortcutStore = create((set, get) => ({
         }
     },
 
-    // Create shortcut
     createShortcut: async (shortcutData) => {
-        console.log(shortcutData)
         try {
             set({ loading: true, error: null });
 
@@ -54,7 +43,6 @@ export const useShortcutStore = create((set, get) => ({
         }
     },
 
-    // Update shortcut
     updateShortcut: async (shortcutId, updateData) => {
         try {
             set({ error: null });
@@ -72,7 +60,6 @@ export const useShortcutStore = create((set, get) => ({
             return true;
         } catch (err) {
             await get().fetchShortcuts();
-
             set({
                 error: err.response?.data?.message || 'Failed to update shortcut'
             });
@@ -80,7 +67,6 @@ export const useShortcutStore = create((set, get) => ({
         }
     },
 
-    // Delete shortcut
     deleteShortcut: async (shortcutId) => {
         try {
             set({ error: null });
@@ -96,7 +82,6 @@ export const useShortcutStore = create((set, get) => ({
             return true;
         } catch (err) {
             await get().fetchShortcuts();
-
             set({
                 error: err.response?.data?.message || 'Failed to delete shortcut'
             });
@@ -104,17 +89,46 @@ export const useShortcutStore = create((set, get) => ({
         }
     },
 
-    // Get filtered shortcuts by selected category
-    getFilteredShortcuts: () => {
-        const { shortcuts, selectedCategory } = get();
+   // Add global shortcut to user's shortcuts
+addGlobalShortcutToUser: async (globalShortcutId, userCategoryId) => {
+    try {
+        set({ loading: true, error: null });
 
-        if (selectedCategory === 'All') {
+        const response = await addGlobalShortcutToUser(globalShortcutId, userCategoryId);
+
+        // Refresh shortcuts to show changes
+        await get().fetchShortcuts();
+
+        set({ loading: false });
+        
+        // Return response with action type
+        return { 
+            success: true, 
+            action: response.action // 'added' or 'removed'
+        };
+    } catch (err) {
+        console.log(err);
+        set({
+            error: err.response?.data?.message || 'Failed to add shortcut',
+            loading: false
+        });
+        return { success: false };
+    }
+},
+
+    // Get shortcuts by category from category store
+    getShortcutsByCategory: (selectedCategory) => {
+        const { shortcuts } = get();
+
+        if (!selectedCategory || selectedCategory === 'All') {
             return shortcuts;
         }
 
-        return shortcuts.filter(s => s.category?._id === selectedCategory || s.category?.name === selectedCategory);
+        return shortcuts.filter(s => 
+            s.category?._id === selectedCategory || 
+            s.category?.name === selectedCategory
+        );
     },
 
-    // Clear error
     clearError: () => set({ error: null })
 }));

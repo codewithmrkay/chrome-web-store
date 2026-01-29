@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { useShortcutStore } from '../../store/GlobalShortcut.store';
 import { GlobalShortcutItem } from './GlobalShortcutItem';
+import { useNavigate } from 'react-router-dom';
 
 export const GlobalShortcutGrid = () => {
+    const navigate = useNavigate();
     const { loading, error, fetchShortcuts, shortcuts, selectedCategory } = useShortcutStore();
-    const filteredShortcuts = shortcuts.filter(s => 
+    const filteredShortcuts = shortcuts.filter(s =>
         selectedCategory === 'all' ? true : s.category?.name === selectedCategory
     );
     useEffect(() => {
@@ -39,9 +41,20 @@ export const GlobalShortcutGrid = () => {
             <div className="container mx-auto px-4 py-6">
                 <div className="alert alert-error">
                     <span>{error}</span>
-                    <button onClick={fetchShortcuts} className="btn btn-sm">
-                        Retry
-                    </button>
+                    <div>
+                        {(error == "Not authenticated") ?
+                            (
+                                (<button onClick={() => { navigate('/login') }} className='btn btn-primary btn-md'>
+                                    Login
+                                </button>)
+                            ) :
+                            (
+                                <button onClick={fetchShortcuts} className="btn btn-sm">
+                                    Retry
+                                </button>
+                            )
+                        }
+                    </div>
                 </div>
             </div>
         );

@@ -130,6 +130,12 @@ export const Login = () => {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
+          <div className='flex items-center justify-center gap-1'>
+             <span>Dont Have Account..?</span>
+             <button onClick={()=>{
+              navigate('/signup')
+             }} className='btn btn-sm btn-link'>Sign Up</button>
+          </div>
         </fieldset>
       </form>
     </div>

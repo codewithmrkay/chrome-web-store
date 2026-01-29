@@ -26,7 +26,7 @@ return (
     <Sidebar />
     <div className="flex-1 flex flex-col px-2 w-full max-w-6xl">
       <Navbar />
-      <main className="flex-1 p-2 overflow-y-auto ">
+      <main className="flex-1 px-2 overflow-y-auto ">
         <Outlet />
       </main>
     </div>

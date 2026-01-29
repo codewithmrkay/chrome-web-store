@@ -22,7 +22,7 @@ export const SignUp = () => {
 
     if (success) {
       toast.success("Sign Up Successfully")
-      navigate("/login");
+      navigate("/");
     }
   };
 

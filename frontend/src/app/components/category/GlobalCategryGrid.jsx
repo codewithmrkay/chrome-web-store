@@ -60,7 +60,7 @@ export const GlobalCategoryGrid = () => {
   }
 
   return (
-    <div className="bg-base-100 shadow-xl sticky top-0 z-10">
+    <div className="bg-base-100 shadow-xl sticky top-0 z-10 pb-2">
       <div className="container">
         <div className="flex items-center gap-2">
           {/* Categories Grid Container */}
@@ -75,7 +75,7 @@ export const GlobalCategoryGrid = () => {
                 onClick={handleCategoryClick}
               />
             ))}
-            <button onClick={() => handleExplore()} className='btn btn-sm btn-secondary'>Go To MyShortCuts</button>
+            <button onClick={() => handleExplore()} className='btn btn-sm btn-secondary uppercase'>Go To MyShortCuts</button>
           </div>
         </div>
       </div>

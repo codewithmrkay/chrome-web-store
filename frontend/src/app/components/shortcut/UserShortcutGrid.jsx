@@ -5,15 +5,15 @@ import { UserShortcutItem } from './UserShortcutItem';
 import { useNavigate } from 'react-router-dom';
 
 export const UserShortcutGrid = () => {
-const navigate = useNavigate();
-  const handleExplore = () => {
-    navigate('/explore')
-  }
+    const navigate = useNavigate();
+    const handleExplore = () => {
+        navigate('/explore');
+    };
 
-    const { loading, error, fetchShortcuts, getFilteredShortcuts } = useShortcutStore();
+    const { loading, error, fetchShortcuts, getShortcutsByCategory } = useShortcutStore();
     const { selectedCategory } = useCategoryStore();
-    
-    const filteredShortcuts = getFilteredShortcuts();
+
+    const filteredShortcuts = getShortcutsByCategory(selectedCategory);
 
     useEffect(() => {
         fetchShortcuts();
@@ -45,9 +45,18 @@ const navigate = useNavigate();
             <div className="container mx-auto px-4 py-6">
                 <div className="alert alert-error">
                     <span>{error}</span>
-                    <button onClick={fetchShortcuts} className="btn btn-sm">
-                        Retry
-                    </button>
+                    {(error == "Not authenticated") ?
+                        (
+                            (<button onClick={() => { navigate('/login') }} className='btn btn-primary btn-md'>
+                                Login
+                            </button>)
+                        ) :
+                        (
+                            <button onClick={fetchShortcuts} className="btn btn-sm">
+                                Retry
+                            </button>
+                        )
+                    }
                 </div>
             </div>
         );
@@ -57,12 +66,16 @@ const navigate = useNavigate();
     if (filteredShortcuts.length === 0) {
         return (
             <div className="container mx-auto px-4 py-6">
-                <h2 className="text-2xl font-bold mb-4">
-                    {selectedCategory} Shortcuts
+                <h2 className="text-2xl font-medium mb-4">
+                    {selectedCategory ? selectedCategory.toUpperCase() : 'ALL'} Shortcuts
                 </h2>
                 <div className="alert alert-info">
-                    <span>No shortcuts in "{selectedCategory}" category yet.</span>
-                    <button onClick={()=>handleExplore()} className='btn btn-neutral'>Explore</button>
+                    <span>
+                        {selectedCategory === 'All'
+                            ? 'No shortcuts yet. Start adding some!'
+                            : `No shortcuts in "${selectedCategory}" category yet.`}
+                    </span>
+                    <button onClick={handleExplore} className='btn btn-neutral'>Explore</button>
                 </div>
             </div>
         );
@@ -71,7 +84,7 @@ const navigate = useNavigate();
     return (
         <div className="container mx-auto px-4 py-6">
             <h2 className="text-2xl font-bold mb-4">
-                {selectedCategory} ({filteredShortcuts.length})
+                {selectedCategory || 'All'} ({filteredShortcuts.length})
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
                 {filteredShortcuts.map((shortcut) => (

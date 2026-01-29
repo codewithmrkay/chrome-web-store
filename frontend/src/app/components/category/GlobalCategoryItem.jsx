@@ -4,6 +4,7 @@ import * as LucideIcons from 'lucide-react';
 export const GlobalCategoryItem = ({ category, isSelected, onClick }) => {
   // Get icon component dynamically
   const getIcon = (iconName) => {
+    console.log(iconName)
     const IconComponent = LucideIcons[iconName] || LucideIcons.Grid;
     return <IconComponent className="w-5 h-5" />;
   };

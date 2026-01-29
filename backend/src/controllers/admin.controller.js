@@ -4,17 +4,19 @@ import { GlobalShortcut } from "../models/globalShortcut.model.js";
 
 export const createGlobalCategory = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name , icon } = req.body;
+    const capitalizedIcon = icon.charAt(0).toUpperCase() + icon.slice(1);
 
-    if (!name)
-      return res.status(400).json({ message: "Category name required" });
+    if (!name || !icon)
+      return res.status(400).json({ message: "Category name/icon required" });
 
     const exists = await GlobalCategory.findOne({ name: name.toLowerCase() });
     if (exists)
       return res.status(409).json({ message: "Category already exists" });
 
     const category = await GlobalCategory.create({
-      name: name.toLowerCase()
+      name: name.toLowerCase(),
+      icon:capitalizedIcon
     });
 
     res.status(201).json(category);
@@ -82,7 +84,7 @@ export const createGlobalShortcut = async (req, res) => {
 
 export const getGlobalShortcut = async (req, res) => {
   try {
-    const Globalshortcuts = await GlobalShortcut.find().populate("category","name").sort({createdAt:-1});
+    const Globalshortcuts = await GlobalShortcut.find().populate("category","name");
     res.status(201).json({message:"Global Shortcut Get Successfully",Globalshortcuts});
   } catch (error) {
     console.log("error to get Global Shorcuts",error)
