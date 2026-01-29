@@ -15,7 +15,7 @@ const port = process.env.PORT || 3000
 app.use(cors({
     origin: [
         'http://localhost:5173',
-        'http://localhost:5173',        
+        'https://chrome-web-store.vercel.app',        
     ],
     credentials: true 
 }));
