@@ -1,9 +1,12 @@
-import { create } from "zustand"
+// store/useAuthStore.js
+import { create } from "zustand";
 import { login, logout, me, signup } from "../services/auth.services";
+
 export const useAuthStore = create((set) => ({
   user: null,
   loading: false,
   error: null,
+  isAuthenticated: false,
 
   signupUser: async (formData) => {
     try {
@@ -14,6 +17,7 @@ export const useAuthStore = create((set) => ({
       set({
         user: data.user,
         loading: false,
+        isAuthenticated: true,
       });
 
       return true;
@@ -21,10 +25,12 @@ export const useAuthStore = create((set) => ({
       set({
         error: err.response?.data?.message || "Signup failed",
         loading: false,
+        isAuthenticated: false,
       });
       return false;
     }
   },
+
   login: async (formData) => {
     try {
       set({ loading: true, error: null });
@@ -34,38 +40,67 @@ export const useAuthStore = create((set) => ({
       set({
         user: data.user,
         loading: false,
+        isAuthenticated: true,
       });
 
       return true;
     } catch (err) {
       set({
-        error: err.response?.data?.message || "Signup failed",
+        error: err.response?.data?.message || "Login failed",
         loading: false,
+        isAuthenticated: false,
       });
       return false;
     }
   },
+
   getProfile: async () => {
     try {
       set({ loading: true, error: null });
       const data = await me();
-      set({ user: data, loading: false });
+      set({
+        user: data,
+        loading: false,
+        isAuthenticated: true
+      });
       return true;
     } catch (err) {
-      set({ user: null, loading: false, error: null }); // Clear user if token invalid
+      set({
+        user: null,
+        loading: false,
+        error: null,
+        isAuthenticated: false
+      });
       return false;
     }
   },
+
   logout: async () => {
     try {
       await logout();
-      set({ user: null, error: null });
+      set({
+        user: null,
+        error: null,
+        isAuthenticated: false
+      });
       return true;
     } catch (err) {
-      set({ user: null, error: null }); // Clear anyway
+      set({
+        user: null,
+        error: null,
+        isAuthenticated: false
+      });
       return true;
     }
   },
+
+  // Helper to check if user has valid token on app load
+  checkAuth: async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      set({ isAuthenticated: false, user: null });
+      return false;
+    }
+    return await useAuthStore.getState().getProfile();
+  },
 }));
-
-

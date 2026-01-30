@@ -2,16 +2,6 @@ import User from "../models/user.model.js"
 import bcrypt from "bcryptjs"
 import setAuthCookies from "../utils/setAuthCookie.js"
 import generateToken from "../utils/generateToken.js"
-
-
-
-
-
-
-
-
-
-
 export const signUp = async (req, res) => {
     const { username, password, email } = req.body
     try {
@@ -55,12 +45,13 @@ export const signUp = async (req, res) => {
         const token = generateToken(user)
 
         // Set cookie
-        setAuthCookies(res, token)
+        // setAuthCookies(res, token)
 
         //  Send safe response
         await user.save()
         res.status(201).json({
             message: "Signup successful",
+            token,
             user: {
                 _id: user._id,
                 username: user.username,
@@ -101,10 +92,11 @@ export const login = async (req, res) => {
         }
         // generate token and setting cookie
         const token = generateToken(user)
-        setAuthCookies(res, token)
+        // setAuthCookies(res, token)
 
         res.status(200).json({
             message: "login successfully",
+            token,
             user: {
                 _id: user._id,
                 email: user.email,

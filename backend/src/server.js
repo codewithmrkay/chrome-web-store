@@ -17,7 +17,7 @@ app.use(cors({
         'http://localhost:5173',
         'https://chrome-web-store.vercel.app',
     ],
-    methods: ['GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS'],
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }));
