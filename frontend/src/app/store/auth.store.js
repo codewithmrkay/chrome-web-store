@@ -6,8 +6,6 @@ export const useAuthStore = create((set) => ({
   user: null,
   loading: false,
   error: null,
-  isAuthenticated: false,
-
   signupUser: async (formData) => {
     try {
       set({ loading: true, error: null });
@@ -17,7 +15,6 @@ export const useAuthStore = create((set) => ({
       set({
         user: data.user,
         loading: false,
-        isAuthenticated: true,
       });
 
       return true;
@@ -25,7 +22,7 @@ export const useAuthStore = create((set) => ({
       set({
         error: err.response?.data?.message || "Signup failed",
         loading: false,
-        isAuthenticated: false,
+
       });
       return false;
     }
@@ -40,7 +37,6 @@ export const useAuthStore = create((set) => ({
       set({
         user: data.user,
         loading: false,
-        isAuthenticated: true,
       });
 
       return true;
@@ -48,7 +44,7 @@ export const useAuthStore = create((set) => ({
       set({
         error: err.response?.data?.message || "Login failed",
         loading: false,
-        isAuthenticated: false,
+
       });
       return false;
     }
@@ -61,7 +57,6 @@ export const useAuthStore = create((set) => ({
       set({
         user: data,
         loading: false,
-        isAuthenticated: true
       });
       return true;
     } catch (err) {
@@ -69,7 +64,6 @@ export const useAuthStore = create((set) => ({
         user: null,
         loading: false,
         error: null,
-        isAuthenticated: false
       });
       return false;
     }
@@ -81,14 +75,12 @@ export const useAuthStore = create((set) => ({
       set({
         user: null,
         error: null,
-        isAuthenticated: false
       });
       return true;
     } catch (err) {
       set({
         user: null,
         error: null,
-        isAuthenticated: false
       });
       return true;
     }
