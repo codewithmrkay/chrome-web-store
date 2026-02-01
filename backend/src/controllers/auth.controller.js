@@ -92,11 +92,10 @@ export const login = async (req, res) => {
         }
         // generate token and setting cookie
         const token = generateToken(user)
-        // setAuthCookies(res, token)
+        setAuthCookies(res, token)
 
         res.status(200).json({
             message: "login successfully",
-            token,
             user: {
                 _id: user._id,
                 email: user.email,

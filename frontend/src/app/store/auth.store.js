@@ -93,14 +93,4 @@ export const useAuthStore = create((set) => ({
       return true;
     }
   },
-
-  // Helper to check if user has valid token on app load
-  checkAuth: async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      set({ isAuthenticated: false, user: null });
-      return false;
-    }
-    return await useAuthStore.getState().getProfile();
-  },
 }));
