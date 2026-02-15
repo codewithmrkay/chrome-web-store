@@ -9,17 +9,17 @@ A modern MERN stack application that serves as your personal app store for websi
 
 <!-- Add your screenshots here -->
 <div align="center">
-  <img src="screenshots/home.png" alt="Home Page" width="800"/>
+  <img src="screenshots/home.jpg" alt="Home Page" width="800"/>
   <p><em>Homepage - Browse categorized websites</em></p>
   
-  <img src="screenshots/categories.png" alt="Categories" width="800"/>
+  <img src="screenshots/demo.jpg" alt="Categories" width="800"/>
   <p><em>Organized by categories</em></p>
   
-  <img src="screenshots/add-shortcut.png" alt="Add Shortcut" width="800"/>
+  <img src="screenshots/demo2.jpg" alt="Add Shortcut" width="800"/>
   <p><em>One-click shortcut creation</em></p>
   
-  <img src="screenshots/custom-shortcut.png" alt="Custom Shortcut" width="800"/>
-  <p><em>Add custom shortcuts</em></p>
+  <!-- <img src="screenshots/custom-shortcut.png" alt="Custom Shortcut" width="800"/>
+  <p><em>Add custom shortcuts</em></p> -->
 </div>
 
 ## ✨ Features
