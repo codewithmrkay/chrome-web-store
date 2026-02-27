@@ -231,7 +231,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **codewithmrkay**
 
 - GitHub: [@codewithmrkay](https://github.com/codewithmrkay)
-- Website: [chrome-web-store-backend.vercel.app](https://chrome-web-store-backend.vercel.app)
+- Website: [chrome-web-store-backend.vercel.app](https://chrome-web-store.vercel.app)
 
 ## 🙏 Acknowledgments
 
