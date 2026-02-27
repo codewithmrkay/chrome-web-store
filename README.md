@@ -2,7 +2,7 @@
 
 A modern MERN stack application that serves as your personal app store for websites. Organize, categorize, and access your favorite websites in one central hub with one-click shortcut creation.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-success)](https://chrome-web-store-backend.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success)](https://chrome-web-store.vercel.app)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ## 📸 Screenshots
@@ -231,7 +231,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **codewithmrkay**
 
 - GitHub: [@codewithmrkay](https://github.com/codewithmrkay)
-- Website: [chrome-web-store-backend.vercel.app](https://chrome-web-store.vercel.app)
+- Website: [chrome-web-store.vercel.app](https://chrome-web-store.vercel.app)
 
 ## 🙏 Acknowledgments
 
